@@ -23,6 +23,7 @@
 		$("#btnWriteForm").on("click", function(){
 			location.href="${pageContext.request.contextPath}/board/noticeForm";
 		});
+
 	});
 	</script>
 	<script>

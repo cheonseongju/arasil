@@ -34,22 +34,35 @@ public class BoardController {
 		return "board/noticeForm";
 	}
 	@RequestMapping(value="/saveBoard",method = RequestMethod.POST)
-	public String saveBoard(@ModelAttribute("NoticeVO")NoticeVO noticeVO,
-			RedirectAttributes rttr) {
-		boardService.getNoticeInsert(noticeVO);
+	public String saveBoard(@ModelAttribute("noticeVO")NoticeVO noticeVO,
+			@RequestParam("mode") String mode
+			,RedirectAttributes rttr) {
+		if(mode.equals("edit")) {
+			boardService.getNoticeUpdate(noticeVO);
+		}else {
+			boardService.getNoticeInsert(noticeVO);
+		}
 		return "redirect:/board/noticePage";
 	}
 	
-//	@RequestMapping(value="/noticeContent", method = RequestMethod.GET)
-//	public String getNoticeContent(Model model, int noticeId) {
-//		NoticeVO pageContent = boardService.getNoticeContent(noticeId);
-//		model.addAttribute("pageContent", pageContent);
-//		return "board/noticeContent";
-//	}
-	// 수정 전 (아직 해결안됨)
 	@RequestMapping(value="/noticeContent", method = RequestMethod.GET)
 	public String getNoticeContent(Model model, @RequestParam("noticeId")int noticeId) {
 		model.addAttribute("pageContent", boardService.getNoticeContent(noticeId));
 		return "board/noticeContent";
+	}
+	
+	@RequestMapping(value="/editForm", method = RequestMethod.GET)
+	public String editForm(@RequestParam("noticeId")int noticeId
+			,@RequestParam("mode")String mode, Model model) {
+		model.addAttribute("pageContent", boardService.getNoticeContent(noticeId));
+		model.addAttribute("mode", mode);
+		model.addAttribute("noticeVO", new NoticeVO());
+		return "board/noticeForm";
+	}
+	
+	@RequestMapping(value ="/deleteBoard", method = RequestMethod.GET)
+	public String getNoticeDelete(RedirectAttributes rttr, @RequestParam("noticeId")int noticeId) {
+		boardService.getNoticeDelete(noticeId);
+		return "redirect:/board/noticePage";
 	}
 }

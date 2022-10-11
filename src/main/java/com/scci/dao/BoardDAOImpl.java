@@ -28,5 +28,15 @@ public class BoardDAOImpl implements BoardDAO {
 	public NoticeVO getNoticeContent(int noticeId) {
 		return sqlSession.selectOne("mapper.notice.selectContent", noticeId);
 	}
+	
+	@Override
+	public int getNoticeUpdate(NoticeVO noticeVO) {
+		return sqlSession.update("mapper.notice.selectUpdate", noticeVO);
+	}
+	
+	@Override
+	public int getNoticeDelete(int noticeId) {
+		return sqlSession.insert("mapper.notice.selectDelete", noticeId);
+	}
 
 }

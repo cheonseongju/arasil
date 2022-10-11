@@ -7,7 +7,8 @@
 	<select id="selectNotice" resultType="map" parameterType="map">
 		select
 		notice_id , notice_title, notice_content, notice_date, user_id
-		from notice
+		from
+		notice
 
 	</select>
 
@@ -15,25 +16,39 @@
 		parameterType="com.scci.vo.NoticeVO">
 		select notice_id, notice_title, notice_content, notice_date, user_id
 		from notice
-		where notice_id = #{noticeId}
-	<!-- 	<if test= 'value != null'>
-			and notice_id = #{noticeId}
-		</if> -->
+		where notice_id = #{notice_id}
+		<!-- <if test= 'value != null'> and notice_id = #{noticeId} </if> -->
 	</select>
 
-<insert id="selectInsert" parameterType="com.scci.vo.NoticeVO">
-	INSERT INTO `arasil`.`notice`
+	<insert id="selectInsert" parameterType="com.scci.vo.NoticeVO">
+		INSERT INTO `arasil`.`notice`
 		(`NOTICE_TITLE`,
 		`NOTICE_CONTENT`,
 		`NOTICE_DATE`,
 		`USER_ID`)
-	values(
-		#{noticeTitle}
-		,#{noticeContent}
+		values(
+		#{notice_title}
+		,#{notice_content}
 		,now()
-		,#{userId}
+		,#{user_id}
 		)
-</insert>
+	</insert>
+
+	<update id="selectUpdate" parameterType="com.scci.vo.NoticeVO">
+		UPDATE `arasil`.`notice`
+		SET
+		`NOTICE_TITLE` = #{notice_title},
+		`NOTICE_CONTENT` = #{notice_content},
+		`NOTICE_DATE` = now(),
+		where notice_id = #{notice_id}
+
+	</update>
+	
+	<delete id="selectDelete" parameterType="int">
+	DELETE FROM `arasil`.`notice`
+	
+		WHERE notice_id = #{notice_id}
+	</delete>
 
 
 </mapper>

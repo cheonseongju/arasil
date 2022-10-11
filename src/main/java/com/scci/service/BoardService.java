@@ -11,4 +11,8 @@ public interface BoardService {
 	public void getNoticeInsert(NoticeVO noticeVO);
 	
 	public NoticeVO getNoticeContent(int noticeId);
+	
+	public int getNoticeUpdate(NoticeVO noticeVO);
+	
+	public void getNoticeDelete(int noticeId);
 }
